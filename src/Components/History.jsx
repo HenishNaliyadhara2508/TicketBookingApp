@@ -12,38 +12,36 @@ const History = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch("http://ec2-13-201-98-117.ap-south-1.compute.amazonaws.com:3000/orders", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          "http://ec2-13-201-98-117.ap-south-1.compute.amazonaws.com:3000/orders",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch orders");
         }
         const data = await response.json();
 
-        // Get the current date and time
         const currentDateTime = new Date();
 
-        // Filter orders:
         const filteredOrders = data.filter((order) => {
           const { showtime, status } = order;
 
-          // Check if the order status is 'COMPLETED'
           if (status !== "COMPLETED") {
             return false;
           }
 
-          // Get the order's start time and convert it to a Date object
           const orderStartTime = new Date(showtime?.startTime);
 
-          // Check if the order start time is in the past
           if (orderStartTime < currentDateTime) {
-            return true; // The order is in the past, include it
+            return true;
           }
 
-          return false; // Otherwise, exclude it
+          return false;
         });
 
         setOrders(filteredOrders);
@@ -77,12 +75,21 @@ const History = () => {
         {orders.map((order) => {
           const { showtime, seatData, id } = order;
           const movieTitle = showtime?.movie?.name || "Unknown Movie";
-          const showtimeTime = new Date(showtime?.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-          const seats = seatData?.seats.map((seat) => `${seat.row}${seat.column}`).join(", ") || "No seats selected";
+          const showtimeTime = new Date(showtime?.startTime).toLocaleTimeString(
+            [],
+            { hour: "2-digit", minute: "2-digit" }
+          );
+          const seats =
+            seatData?.seats
+              .map((seat) => `${seat.row}${seat.column}`)
+              .join(", ") || "No seats selected";
           const date = new Date(showtime?.startTime).toLocaleDateString();
 
           return (
-            <div key={id} className="container mb-5 d-flex flex-column border border-primary w-25 rounded m-2">
+            <div
+              key={id}
+              className="container mb-5 d-flex flex-column border border-primary w-25 rounded m-2"
+            >
               <div className="container m-3">
                 <div className="text-primary">Date</div>
                 <div>{date}</div>
@@ -105,7 +112,7 @@ const History = () => {
                 <button
                   type="button"
                   className="btn btn-outline-primary m-3 w-75"
-                  onClick={() => handleDownloadTicket(id, movieTitle)} 
+                  onClick={() => handleDownloadTicket(id, movieTitle)}
                 >
                   Download Ticket
                 </button>

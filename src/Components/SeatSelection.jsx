@@ -82,38 +82,38 @@ const SeatSelection = () => {
   const handleSelectSeat = (seat, price, row, layoutType) => {
     const totalSelectedSeats = selectedSeats.length;
 
-    // Prevent selection if totalSelectedSeats >= selectedSeatsNumber
+    
     if (
       totalSelectedSeats >= selectedSeatsNumber &&
       !selectedSeats.some((s) => s.row === row && s.column === seat)
     ) {
       alert(`You can only select a maximum of ${selectedSeatsNumber} seats.`);
-      return; // Don't allow further selection
+      return;
     }
 
-    // Update selected seats: toggle selection (add/remove)
+    
     let updatedSeats;
     let updatedTotalAmount;
 
     if (selectedSeats.some((s) => s.row === row && s.column === seat)) {
-      // Deselect the seat
+      
       updatedSeats = selectedSeats.filter(
         (s) => !(s.row === row && s.column === seat)
       );
 
-      // Recalculate the total amount by removing the deselected seat's price
+      
       updatedTotalAmount = updatedSeats.reduce(
         (sum, seat) => sum + seat.price,
         0
       );
     } else {
-      // Select the seat and store the price along with the seat details
+      
       updatedSeats = [
         ...selectedSeats,
         { row, column: seat, layoutType, price },
       ];
 
-      // Recalculate the total amount by adding the selected seat's price
+      
       updatedTotalAmount = updatedSeats.reduce(
         (sum, seat) => sum + seat.price,
         0

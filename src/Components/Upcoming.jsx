@@ -26,27 +26,22 @@ const Upcoming = () => {
         }
         const data = await response.json();
 
-        // Get the current date and time
         const currentDateTime = new Date();
 
-        // Filter orders to show only 'completed' orders with a startTime in the future
         const upcomingOrders = data.filter((order) => {
           const { showtime, status } = order;
 
-          // Only show orders with 'completed' status
           if (status !== "COMPLETED") {
             return false;
           }
 
-          // Get the order's start time and convert it to a Date object
           const orderStartTime = new Date(showtime?.startTime);
 
-          // Only include orders with a startTime greater than the current time
           if (orderStartTime > currentDateTime) {
             return true;
           }
 
-          return false; // Exclude orders with past start times
+          return false;
         });
 
         setOrders(upcomingOrders);
@@ -76,13 +71,17 @@ const Upcoming = () => {
         {orders.map((order) => {
           const { showtime, seatData, totalPrice, id } = order;
           const movieTitle = showtime?.movie?.name || "Unknown Movie";
-          const showtimeTime = new Date(showtime?.startTime).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          });
+          const showtimeTime = new Date(showtime?.startTime).toLocaleTimeString(
+            [],
+            {
+              hour: "2-digit",
+              minute: "2-digit",
+            }
+          );
           const seats =
-            seatData?.seats.map((seat) => `${seat.row}${seat.column}`).join(", ") ||
-            "No seats selected";
+            seatData?.seats
+              .map((seat) => `${seat.row}${seat.column}`)
+              .join(", ") || "No seats selected";
           const date = new Date(showtime?.startTime).toLocaleDateString();
 
           return (

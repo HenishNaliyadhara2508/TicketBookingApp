@@ -51,7 +51,7 @@ const MovieBooking = () => {
       .catch((error) => console.error("Fetch Error:", error));
   }, [movieId, date]);
 
-  const handleBack = () => navigate("/Movie");
+  const handleBack = () => navigate("/Home/Movie");
 
   const handleTheaterSelect = (theaterId) => {
     const selected = theaters.find((theater) => theater.id === theaterId);

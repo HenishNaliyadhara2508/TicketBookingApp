@@ -130,7 +130,7 @@ const BookingDetail = () => {
             </div>
             <div>
                 <button type="button" className="btn btn-outline-primary w-100 mt-2 me-2 mb-3" onClick={handleTotalPay}>
-                    Total Pay ${finalTotalAmount} - Proceed
+                    Total Pay ${totalAmount} - Proceed
                 </button>
             </div>
             <div>

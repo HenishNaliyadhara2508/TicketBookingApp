@@ -112,17 +112,17 @@ const BookingDetail = () => {
             <div className="container d-flex justify-content-between">
                 <div>
                     <div>SEAT Charges</div>
-                    <div>Service Charge (6%)</div>
+                    
                 </div>
                 <div className="">
                     <div>${totalAmount}</div>
-                    <div>${serviceCharge}</div>
+                    
                 </div>
             </div>
             <hr />
             <div className="container mb-3 d-flex justify-content-between">
                 <div>Total Payment</div>
-                <div>${finalTotalAmount}</div>
+                <div>${totalAmount}</div>
             </div>
 
             <div className="fs-6">
